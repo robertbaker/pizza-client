@@ -1,50 +1,42 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ManagePizzaComponent } from './manage-pizza/manage-pizza.component';
-import { CreatePizzaComponent } from './create-pizza/create-pizza.component';
-import { CreateToppingComponent } from './create-topping/create-topping.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { ManagePizzaComponent } from "./manage-pizza/manage-pizza.component";
+import { CreatePizzaComponent } from "./create-pizza/create-pizza.component";
+import { CreateToppingComponent } from "./create-topping/create-topping.component";
+import { PizzaListComponent } from "./pizza-list/pizza-list.component";
+import { PizzaToppingsComponent } from "./pizza-toppings/pizza-toppings.component";
+import { PizzaResolver } from "./pizza/pizza.resolver";
+import { ToppingsResolver } from "./topping/topping.resolver";
 
 const routes: Routes = [
-  // {
+  {
+    path: "pizza",
+    pathMatch: "full",
+    component: ManagePizzaComponent,
+    resolve: {
+      pizzas: PizzaResolver,
+      toppings: ToppingsResolver
+    }
+  },
+  {
+    path: "pizza/:id",
 
-  //   path: 'portfolio',
-  //   loadChildren: 'app/pizza/portfolio.module#PortfolioModule',
-  //   data: { preload: false }
-  // },
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'pizza'
-  },
-  {
-    path: 'pizza',
-    pathMatch: 'full',
+    pathMatch: "full",
     component: ManagePizzaComponent,
-    data: { preload: true }
+    resolve: {
+      pizzas: PizzaResolver,
+      toppings: ToppingsResolver
+    }
   },
   {
-    path: 'pizza/:id',
-    pathMatch: 'full',
-    component: ManagePizzaComponent,
-    data: { preload: true }
-  },
-  {
-    path: 'create/pizza',
-    pathMatch: 'full',
-    component: ManagePizzaComponent,
-    data: { preload: true }
-  },
-  {
-    path: 'create/topping',
-    pathMatch: 'full',
-    component: CreateToppingComponent,
-    data: { preload: true }
-  },
-
+    path: "",
+    pathMatch: "full",
+    redirectTo: "pizza"
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

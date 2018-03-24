@@ -1,51 +1,56 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import { IPizza, Pizza } from './IPizza';
-import { IPizzaTopping, PizzaTopping } from '../pizza-toppings/pizza-toppings';
-import { ITopping } from '../topping/ITopping';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/operator/map";
+import { IPizza, Pizza } from "./IPizza";
+import { IPizzaTopping, PizzaTopping } from "../pizza-toppings/pizza-toppings";
+import { ITopping } from "../topping/ITopping";
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ "Content-Type": "application/json" })
 };
 
 @Injectable()
 export class PizzaService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-  }
-
-  getAllPizzas(): Observable<IPizza[]> {
+  public getAllPizzas(): Observable<IPizza[]> {
     return this.http.get<IPizza[]>(`/pizzas`);
   }
 
-  createPizza(pizza:IPizza) {
-    let body = JSON.stringify(pizza);
-    return this.http.post('/pizza', body, httpOptions);
+  public createPizza(name: string, description: string): Observable<IPizza> {
+    let body = JSON.stringify(new Pizza(name, description));
+    return this.http.post<IPizza>("/pizzas", body, httpOptions);
   }
 
-  getPizza(pizzaId: number):Observable<IPizza> {
+  public getPizza(pizzaId: number): Observable<IPizza> {
     return this.http.get<IPizza>(`/pizzas/${pizzaId}`, httpOptions);
   }
 
-  deleteTopping(toppingId: number) {
+  public deleteTopping(toppingId: number) {
     return this.http.delete(`/toppings/${toppingId}`);
   }
 
-  deletePizza(pizzaId: number) {
+  public deletePizza(pizzaId: number) {
     return this.http.delete(`/pizzas/${pizzaId}`);
   }
 
-  getToppingsOnPizza(pizzaId: number): Observable<ITopping[]> {
+  public getToppingsOnPizza(pizzaId: number): Observable<ITopping[]> {
     return this.http.get<ITopping[]>(`/pizzas/${pizzaId}/toppings`);
   }
 
-  addToppingToPizza(pizzaId: number, toppingId: number) {
-    this.http.post(`/pizzas/${pizzaId}/toppings?toppingId=${toppingId}`, null, httpOptions).subscribe(x => { console.log(x); });
+  public addToppingToPizza(
+    pizzaId: number,
+    toppingId: number
+  ): Observable<IPizzaTopping> {
+    return this.http.post<IPizzaTopping>(
+      `/pizzas/${pizzaId}/toppings?toppingId=${toppingId}`,
+      null,
+      httpOptions
+    );
   }
 
-  removeToppingFromPizza(pizzaId: number, toppingId: number) {
-    this.http.delete(`/pizzas/${pizzaId}/toppings/${toppingId}`).subscribe(x => { console.log(x); });
+  public removeToppingFromPizza(pizzaId: number, toppingId: number) {
+    return this.http.delete(`/pizzas/${pizzaId}/toppings/${toppingId}`);
   }
 }
