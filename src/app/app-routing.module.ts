@@ -23,6 +23,7 @@ const routes: Routes = [
 
     pathMatch: "full",
     component: ManagePizzaComponent,
+    runGuardsAndResolvers: "always",
     resolve: {
       pizzas: PizzaResolver,
       toppings: ToppingsResolver
