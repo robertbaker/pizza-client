@@ -9,15 +9,11 @@ import {
   MatInputModule,
   MatDialogModule,
   MatSidenavModule
-} from "@angular/material";
-import { NgModule } from "@angular/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { ScrollDispatchModule } from "@angular/cdk/scrolling";
+} from '@angular/material';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
-    ScrollDispatchModule,
     MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
@@ -32,7 +28,6 @@ import { ScrollDispatchModule } from "@angular/cdk/scrolling";
   ],
   exports: [
     MatButtonModule,
-    ScrollDispatchModule,
     MatDialogModule,
     MatInputModule,
     MatFormFieldModule,

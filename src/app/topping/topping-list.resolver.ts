@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
   RouterStateSnapshot
-} from "@angular/router";
-import { Observable } from "rxjs/Observable";
-import { ToppingService } from "./topping.service";
-import { ITopping } from "./ITopping";
+} from '@angular/router';
+import { ToppingService } from './topping.service';
+import { ITopping } from './ITopping';
+import { Observable } from 'rxjs';
 
 @Injectable()
-export class ToppingsResolver implements Resolve<Observable<ITopping[]>> {
+export class ToppingListResolver implements Resolve<Observable<ITopping[]>> {
   constructor(private toppingService: ToppingService) {}
 
   public resolve(

@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-no-selection",
+  selector: 'app-no-selection',
   template: `
     <div fxLayout="row" class="panel" fxFlexFill fxLayoutGap="16px">
       <div class="title-heading">
@@ -10,7 +10,7 @@ import { Component, OnInit } from "@angular/core";
       </div>
     </div>
   `,
-  styles: [".panel { background-color: #e3e3e3; padding:48px;}"]
+  styles: ['.panel { background-color: #e3e3e3; padding:48px;}']
 })
 export class NoSelectionComponent implements OnInit {
   constructor() {}

@@ -1,7 +1,5 @@
-import { Injectable, EventEmitter, Input, Output } from "@angular/core";
-
-import { Observable } from "rxjs/Observable";
-import { MatSnackBar } from "@angular/material";
+import { Injectable, EventEmitter, Input, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class UndoService {
@@ -10,11 +8,11 @@ export class UndoService {
   public performActionWithUndo(
     message: string,
     onAction: () => any,
-    onUndo: () => any
+    onUndo?: () => any
   ): void {
     let performDelete = true;
 
-    let snackBarRef = this.snackBar.open(message, "Undo", {
+    const snackBarRef = this.snackBar.open(message, 'Undo', {
       duration: 3000
     });
 

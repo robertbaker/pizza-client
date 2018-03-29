@@ -1,11 +1,10 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs/Observable";
-import { ITopping } from "../topping/ITopping";
-import { PizzaService } from "../pizza/pizza.service";
-
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ITopping } from '../topping/ITopping';
+import { PizzaService } from '../pizza/pizza.service';
+import { map, filter, reduce } from 'rxjs/operators';
 const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
@@ -15,17 +14,20 @@ export class PizzaToppingsService {
   public saveToppings(pizzaId: number, selectedToppings: number[]) {
     let existingToppings: ITopping[];
 
-    this.pizzaService
+    const observable = this.pizzaService
       .getToppingsOnPizza(pizzaId)
-      .map(x => (existingToppings = x))
-      .subscribe(() => {
-        this.addSelectedToppings(pizzaId, selectedToppings, existingToppings);
-        this.removeDeselectedToppings(
-          pizzaId,
-          selectedToppings,
-          existingToppings
-        );
-      });
+      .pipe(map(x => (existingToppings = x)));
+
+    observable.subscribe(() => {
+      this.addSelectedToppings(pizzaId, selectedToppings, existingToppings);
+      this.removeDeselectedToppings(
+        pizzaId,
+        selectedToppings,
+        existingToppings
+      );
+    });
+
+    return observable;
   }
 
   private addSelectedToppings(
@@ -42,8 +44,8 @@ export class PizzaToppingsService {
     toppingId: number,
     existingToppings: ITopping[]
   ) {
-    var existingTopping = existingToppings.find(
-      existingTopping => existingTopping.id === toppingId
+    const existingTopping = existingToppings.find(
+      topping => topping.id === toppingId
     );
     if (existingTopping === undefined) {
       this.pizzaService.addToppingToPizza(pizzaId, toppingId).subscribe();
@@ -69,11 +71,10 @@ export class PizzaToppingsService {
     toppingId: number,
     selectedToppings: number[]
   ) {
-    var selectedTopping = selectedToppings.find(
+    const selectedTopping = selectedToppings.find(
       selectedToppingId => selectedToppingId === toppingId
     );
     if (selectedTopping === undefined) {
-      debugger;
       this.pizzaService.removeToppingFromPizza(pizzaId, toppingId).subscribe();
     }
   }

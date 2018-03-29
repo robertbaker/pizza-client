@@ -1,13 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs/Observable";
-import "rxjs/add/operator/map";
-import { IPizza, Pizza } from "./IPizza";
-import { IPizzaTopping, PizzaTopping } from "../pizza-toppings/pizza-toppings";
-import { ITopping } from "../topping/ITopping";
-
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { IPizza, Pizza } from './IPizza';
+import { IPizzaTopping, PizzaTopping } from '../pizza-toppings/pizza-toppings';
+import { ITopping } from '../topping/ITopping';
+import { Observable } from 'rxjs';
 const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
@@ -19,8 +17,8 @@ export class PizzaService {
   }
 
   public createPizza(name: string, description: string): Observable<IPizza> {
-    let body = JSON.stringify(new Pizza(name, description));
-    return this.http.post<IPizza>("/pizzas", body, httpOptions);
+    const body = JSON.stringify(new Pizza(name, description));
+    return this.http.post<IPizza>('/pizzas', body, httpOptions);
   }
 
   public getPizza(pizzaId: number): Observable<IPizza> {

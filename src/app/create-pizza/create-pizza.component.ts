@@ -1,24 +1,32 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { IPizza, Pizza } from "../pizza/IPizza";
-import { PizzaService } from "../pizza/pizza.service";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { CreatePizzaDialogComponent } from "./create-pizza-dialog.component";
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { IPizza, Pizza } from '../pizza/IPizza';
+import { PizzaService } from '../pizza/pizza.service';
+import { CreatePizzaDialogComponent } from './create-pizza-dialog.component';
+import { PizzaToppingsService } from '../pizza-toppings/pizza-toppings.service';
+import { Router } from '@angular/router';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
-  selector: "app-create-pizza",
+  selector: 'app-create-pizza',
   template: `
-    <button mat-raised-button color="primary" (click)="openDialog()">Save as</button>
+  <button mat-raised-button color="primary" (click)="openDialog()">Save as</button>
   `,
   styles: []
 })
 export class CreatePizzaComponent implements OnInit {
-  @Output() onPizzaCreated = new EventEmitter<IPizza>();
+  @Input() selectedToppings?: number[];
 
-  constructor(private dialog: MatDialog, private pizzaService: PizzaService) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    private pizzaService: PizzaService,
+    private pizzaToppingsService: PizzaToppingsService
+  ) {}
 
   openDialog(): void {
-    let dialogRef = this.dialog.open(CreatePizzaDialogComponent, {
-      width: "300px"
+    const dialogRef = this.dialog.open(CreatePizzaDialogComponent, {
+      width: '300px'
     });
 
     dialogRef.afterClosed().subscribe(data => {
@@ -26,7 +34,24 @@ export class CreatePizzaComponent implements OnInit {
         this.pizzaService
           .createPizza(data.name, data.description)
           .subscribe(pizza => {
-            this.onPizzaCreated.emit(pizza);
+            if (this.selectedToppings != null) {
+              this.pizzaToppingsService.saveToppings(
+                pizza.id,
+                this.selectedToppings
+              );
+            }
+
+            this.router
+              .navigate([{ outlets: { detail: [pizza.id] } }])
+              .then(() =>
+                this.matSnackBar.open(
+                  `${pizza.name} pizza created successfully.`,
+                  'Dismiss',
+                  {
+                    duration: 2000
+                  }
+                )
+              );
           });
       }
     });
