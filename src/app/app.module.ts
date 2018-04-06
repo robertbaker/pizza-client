@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { CreatePizzaDialogComponent } from './create-pizza/create-pizza-dialog.component';
 import { ManagePizzaComponent } from './manage-pizza/manage-pizza.component';
@@ -48,6 +48,7 @@ import { PizzaListResolver } from './pizza/pizza-list.resolver';
   imports: [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
