@@ -1,21 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IListItem } from '../common/IListItem';
-import { ITopping } from '../topping/ITopping';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { PizzaService } from '../pizza/pizza.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Input } from '@angular/core';
-import { Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Component, Output, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ITopping } from './ITopping';
+import { IListItem } from '../common/IListItem';
 @Component({
   selector: 'app-toppings-list',
   template: `
   <p class="mat-body-1">Toppings selected: {{toppingsList.selectedOptions.selected.length}}</p>
   <mat-selection-list #toppingsList [(ngModel)]="selectedToppingsValue"
     (ngModelChange)="selectedToppingsChange.emit(this.selectedToppingsValue)" class="pizza-toppings-list">
-    <mat-list-option *ngFor="let topping of toppings | async" [value]="topping.id">
-      {{topping.name}}
+    <mat-list-option *ngFor="let topping of toppings | async" [value]="topping.id" [hidden]="topping.removed">
+    {{topping.name}}
     </mat-list-option>
   </mat-selection-list>
 `,

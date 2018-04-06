@@ -1,13 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IPizza } from '../pizza/IPizza';
-import { IPizzaTopping } from './pizza-toppings';
-import { ToppingService } from '../topping/topping.service';
-import { ITopping } from '../topping/ITopping';
-import { PizzaService } from '../pizza/pizza.service';
-import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
-import { IListItem } from '../common/IListItem';
-import { PizzaToppingsService } from './pizza-toppings.service';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IPizza } from '../pizza/IPizza';
+import { ITopping } from '../topping/ITopping';
 @Component({
   selector: 'app-pizza-toppings',
   template: `
@@ -23,7 +18,6 @@ import { map } from 'rxjs/operators';
   <app-toppings-list [(selectedToppings)]="selectedToppings"></app-toppings-list>
   <app-create-topping (toppingCreated)="onToppingCreated($event)"></app-create-topping>
 </div>
-<router-outlet></router-outlet>
   `,
   styles: ['.pizza-toppings { max-width:950px; padding:16px;}']
 })
@@ -31,7 +25,12 @@ export class PizzaToppingsComponent implements OnInit {
   public pizza: IPizza;
   public selectedToppings: number[];
   constructor(private route: ActivatedRoute, private router: Router) {
-    this.route.data.pipe(map(data => data['selectedPizza']));
+    this.route.data
+      .pipe(map(data => data['selectedPizza']))
+      .subscribe(pizza => {
+        this.pizza = pizza;
+      });
+
     this.route.data
       .pipe(
         map(data => {
@@ -50,8 +49,15 @@ export class PizzaToppingsComponent implements OnInit {
   }
 
   public onToppingCreated(topping: ITopping) {
-    debugger;
-    this.router.navigate([{ outlets: { detail: [this.pizza.id] } }]);
+    // TODO this isn't great, fix this.
+    this.router
+      .navigate(['pizza'])
+      .then(() =>
+        this.router.navigate([
+          'pizza',
+          { outlets: { detail: [this.pizza.id] } }
+        ])
+      );
   }
 
   ngOnInit() {}

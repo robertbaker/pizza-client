@@ -13,7 +13,7 @@ export class UndoService {
     let performDelete = true;
 
     const snackBarRef = this.snackBar.open(message, 'Undo', {
-      duration: 3000
+      duration: 2000
     });
 
     snackBarRef.afterDismissed().subscribe(() => {

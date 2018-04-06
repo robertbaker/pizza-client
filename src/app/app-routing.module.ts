@@ -53,16 +53,6 @@ const routes: Routes = [
     redirectTo: 'pizza'
   },
   {
-    path: 'toppings',
-    children: [
-      {
-        path: 'create',
-        component: CreateToppingComponent,
-        outlet: 'popup'
-      }
-    ]
-  },
-  {
     path: 'pizza',
     component: ManagePizzaComponent,
     runGuardsAndResolvers: 'always',
@@ -71,6 +61,7 @@ const routes: Routes = [
     },
     children: [
       {
+        runGuardsAndResolvers: 'always',
         path: '',
         component: PizzaListComponent,
         outlet: 'list'
@@ -90,11 +81,6 @@ const routes: Routes = [
         path: '',
         component: NoSelectionComponent,
         outlet: 'detail'
-      },
-      {
-        path: 'create',
-        component: CreatePizzaComponent,
-        outlet: 'popup'
       }
     ]
   }

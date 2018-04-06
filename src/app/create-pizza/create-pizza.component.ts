@@ -42,7 +42,13 @@ export class CreatePizzaComponent implements OnInit {
             }
 
             this.router
-              .navigate([{ outlets: { detail: [pizza.id] } }])
+              .navigate([
+                'pizza',
+                {
+                  outlets: { detail: [pizza.id] },
+                  queryParams: { reload: true }
+                }
+              ])
               .then(() =>
                 this.matSnackBar.open(
                   `${pizza.name} pizza created successfully.`,

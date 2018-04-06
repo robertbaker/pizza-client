@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ToppingService } from '../topping/topping.service';
-import { ITopping } from '../topping/ITopping';
+import { ITopping, Topping } from '../topping/ITopping';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { CreateToppingDialogComponent } from './create-topping-dialog.component';
 import { Router } from '@angular/router';
@@ -20,14 +20,15 @@ export class CreateToppingComponent implements OnInit {
     private toppingService: ToppingService
   ) {}
 
-  @Output() public toppingCreated: EventEmitter<ITopping>;
+  @Output()
+  public toppingCreated: EventEmitter<ITopping> = new EventEmitter<ITopping>();
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CreateToppingDialogComponent, {
       width: '300px'
     });
-
     dialogRef.afterClosed().subscribe(data => {
+      this.toppingCreated.emit(new Topping('d'));
       if (data !== undefined) {
         this.toppingService.createTopping(data.name).subscribe(topping => {
           this.matSnackBar.open(
@@ -37,7 +38,6 @@ export class CreateToppingComponent implements OnInit {
               duration: 2000
             }
           );
-
           this.toppingCreated.emit(topping);
         });
       }
