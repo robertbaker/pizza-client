@@ -13,7 +13,7 @@ export class ApiInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const apiReq = req.clone({
-      url: `https://api.oforce.com/${req.url}`
+      url: `https://api.oforce.com${req.url}`
     });
     return next.handle(apiReq);
   }
