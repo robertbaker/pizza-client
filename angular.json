@@ -1,11 +1,20 @@
 {
-  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "pizza-client": {
       "root": "",
+      "sourceRoot": "/src",
       "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true,
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -28,9 +37,7 @@
               }
             ],
             "styles": [
-              {
-                "input": "src/styles.scss"
-              }
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -38,8 +45,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "src": "src/environments/environment.ts",
-                  "replaceWith": "src/environments/environment.prod.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -62,6 +69,10 @@
           "configurations": {
             "production": {
               "browserTarget": "pizza-client:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "hmrWarning": false
             }
           }
         },
@@ -79,9 +90,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              {
-                "input": "styles.scss"
-              }
+              "styles.scss"
             ],
             "scripts": [],
             "assets": [
@@ -134,5 +143,6 @@
         }
       }
     }
-  }
+  },
+  "defaultProject": "pizza-client"
 }

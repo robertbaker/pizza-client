@@ -60,5 +60,5 @@ export class PizzaToppingsComponent implements OnInit {
       );
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

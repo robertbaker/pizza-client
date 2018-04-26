@@ -5,7 +5,15 @@
 
 export const environment = {
   production: false,
-  hmr: true
+  hmr: true,
+  firebase: {
+    apiKey: 'AIzaSyCP-ZVL7_qG_fcbYJ9H1FGInUnnSmXSTuQ',
+    authDomain: 'chromagraphix-43a1e.firebaseapp.com',
+    databaseURL: 'https://chromagraphix-43a1e.firebaseio.com',
+    projectId: 'chromagraphix-43a1e',
+    storageBucket: 'chromagraphix-43a1e.appspot.com',
+    messagingSenderId: '1048646267456'
+  }
 };
 
 /*
