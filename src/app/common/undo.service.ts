@@ -1,9 +1,11 @@
 import { Injectable, EventEmitter, Input, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UndoService {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar) { }
 
   public performActionWithUndo(
     message: string,

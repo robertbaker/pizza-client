@@ -8,9 +8,11 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PizzaService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public getAllPizzas(): Observable<IPizza[]> {
     return this.http.get<IPizza[]>(`/pizzas`);

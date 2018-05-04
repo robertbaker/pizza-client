@@ -7,9 +7,11 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PizzaToppingsService {
-  constructor(private pizzaService: PizzaService) {}
+  constructor(private pizzaService: PizzaService) { }
 
   public saveToppings(pizzaId: number, selectedToppings: number[]) {
     let existingToppings: ITopping[];

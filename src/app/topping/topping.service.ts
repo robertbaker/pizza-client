@@ -6,9 +6,11 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ToppingService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   deleteTopping(toppingId: number) {
     return this.http.delete(`/toppings/${toppingId}`);
