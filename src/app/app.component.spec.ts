@@ -19,7 +19,7 @@ describe('AppComponent', () => {
     })
   );
   it(
-    `should have as title 'app'`,
+    `should have as title 'pizza client'`,
     async(() => {
       const fixture = TestBed.createComponent(AppComponent);
       const app = fixture.debugElement.componentInstance;
