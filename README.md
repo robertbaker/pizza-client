@@ -1,5 +1,7 @@
 # PizzaClient
 
+This project was an interview excercise. It required api services specific to the task given by the interviewr. It's no longer working and not much time was spent on this project.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.0-rc.3.
 
 ## Development server
